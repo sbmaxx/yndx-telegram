@@ -1,0 +1,27 @@
+{
+  "name": "yndx-telegram",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sbmaxx/yndx-telegram.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sbmaxx/yndx-telegram/issues"
+  },
+  "homepage": "https://github.com/sbmaxx/yndx-telegram#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "node-fetch": "^2.6.7",
+    "puppeteer": "^13.4.0",
+    "telegraf": "^4.7.0"
+  },
+  "private": true
+}
