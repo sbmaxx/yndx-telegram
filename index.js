@@ -6,7 +6,14 @@ require('dotenv').config();
 
 const { Telegraf } = require('telegraf');
 
-const token = proccess.env.YNDX_TELEGRAM_TOKEN;
+const token = proccess.env.BOT_TOKEN;
+
+if (!token) {
+    console.error('Get token via @botfather');
+    console.error('https://core.telegram.org/bots#how-do-i-create-a-bot');
+    console.error('echo BOT_TOKEN="token" >> .env')
+    process.exit(1);
+}
 
 const bot = new Telegraf(token);
 
