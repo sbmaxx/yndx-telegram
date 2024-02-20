@@ -6,7 +6,7 @@ require('dotenv').config();
 
 const { Telegraf } = require('telegraf');
 
-const token = proccess.env.BOT_TOKEN;
+const token = process.env.BOT_TOKEN;
 
 if (!token) {
     console.error('Get token via @botfather');
@@ -76,7 +76,7 @@ bot.command('wazzup', ctx => {
     });
 });
 
-if (proccess.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
     const domain = process.env.WEBHOOK_DOMAIN;;
     const port = Number(process.env.PORT) || 3000;
     bot.launch({
