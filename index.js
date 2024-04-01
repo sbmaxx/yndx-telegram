@@ -32,6 +32,8 @@ bot.command('img', async ctx => {
     const base = 'https://sbmaxx.github.io/yndx/';
     const args = [];
 
+    args.push('r=' + Math.random());
+
     if (CNYACL.includes(ctx.update.message.from.id)) {
         args.push('cny=1');
     }
