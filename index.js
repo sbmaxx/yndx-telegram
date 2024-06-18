@@ -23,8 +23,13 @@ let browser;
     browser = await puppeteer.launch();
 })();
 
-// vitaly, mfurzikov, igor, nikita pogorelov, sbmaxx
+                // vitaly, mfurzikov, igor, nikita pogorelov, sbmaxx
 const CNYACL = [138298337, 321196613, 196199961, 481607415, 603283];
+
+// nazarkin
+const THB = [53036421, 603283];
+const KZT = [53036421, 603283];
+const RSD = [603283];
 
 bot.command('img', async ctx => {
     console.log(ctx.update.message.from, ctx.update.message.chat);
@@ -117,18 +122,16 @@ bot.command('premium', async ctx => {
 bot.command('wazzup', ctx => {
     console.log(ctx.update.message.from, ctx.update.message.chat);
 
-    const tickers = ['yndx', 'usd', 'eur', 'cny'];
-
     fetch('https://rozhdestvenskiy.ru/yndx-stock-server')
         .then(r => r.json())
         .then(r => {
             return r.quoteResponse.result
-                .filter((_, i) => i > 0 && i <= 4)
-                .map((o, i) => ({
+                .filter((_, i) => i > 0)
+                .map(o => ({
                     fallback: o.marketPrice,
                     price: o.regularMarketPrice,
                     change: o.regularMarketChange,
-                    ticker: tickers[i]
+                    ticker: o.ticker
                 }));
         })
         .then(data => ctx.replyWithMarkdownV2(processData(data, ctx.update.message.from.id)));
@@ -183,10 +186,23 @@ function processData(stocks, userId) {
 | Ticker | Price   | Change |
 +--------+---------+--------+\n`;
 
-    content += stocks.filter(({ ticker }) => {
-        if (ticker === 'cny' && CNYACL.includes(userId)) {
+    content += stocks.filter(({ ticker }, i) => {
+        if (ticker === 'CNY' && CNYACL.includes(userId)) {
             return true;
         }
+
+        if (ticker === 'THB' && THB.includes(userId)) {
+            return true
+        }
+
+        if (ticker === 'KZT' && KZT.includes(userId)) {
+            return true
+        }
+
+        if (ticker === 'RSD' && RSD.includes(userId)) {
+            return true
+        }
+
         return true;
     }).map(({ change, price, fallback, ticker }) => addContent({
         change,
