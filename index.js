@@ -165,14 +165,25 @@ process.on('SIGTERM', async () => {
 
 function processData(stocks, userId) {
     const addContent = ({ change, price, ticker, fallback }) => {
-        const strPrice = (price || fallback).toFixed(2);
+        const strPrice = (price || fallback).toFixed(2).replace('.', '\\.');
         const strChange = (change || 0).toFixed(2);
-        const postfix = (change > 0 && strChange !== '0.00' ? '+' : '') + strChange.replace('-', '−');
+        const postfix = (
+            (change > 0 && strChange !== '0.00' ? '+' : '') + strChange.replace('-', '−')
+        );
+        // .replace('.', '.')
+        // .replace('+', '\\+');
 
-        return `*${ticker}* ${strPrice.replace('.', '\\.')}, ${postfix.replace('.', '\\.').replace('+', '\\+')}`;
+        return `| ${ticker.padEnd(6, ' ')} | ${strPrice.trim().padStart(8, ' ')} | ${postfix.trim().padStart(6, ' ')} |`;
     }
 
-    return stocks.filter(({ ticker }) => {
+    let content = "";
+
+    content += `\`\`\`
++--------+---------+--------+
+| Ticker | Price   | Change |
++--------+---------+--------+\n`;
+
+    content += stocks.filter(({ ticker }) => {
         if (ticker === 'cny' && CNYACL.includes(userId)) {
             return true;
         }
@@ -183,4 +194,8 @@ function processData(stocks, userId) {
         fallback,
         ticker
     })).join('\n');
+
+    content += `\n+--------+---------+--------+\`\`\``;
+
+    return content;
 }
