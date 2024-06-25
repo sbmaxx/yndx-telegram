@@ -23,13 +23,21 @@ let browser;
     browser = await puppeteer.launch();
 })();
 
-                // vitaly, mfurzikov, igor, nikita pogorelov, sbmaxx
-const CNYACL = [138298337, 321196613, 196199961, 481607415, 603283];
+             // vitaly, mfurzikov, igor, nikita pogorelov, sbmaxx
+const CNY = [138298337, 321196613, 196199961, 481607415, 603283];
 
 // nazarkin
-const THB = [53036421, 603283];
-const KZT = [53036421, 603283];
-const RSD = [603283];
+const THB = [53036421];
+const KZT = [53036421];
+
+            // luckjanov
+const RSD = [70464800];
+
+            // mfurzikov
+const CHF = [321196613]
+
+                  // vitaly
+const CNYISLAST = [138298337];
 
 bot.command('img', async ctx => {
     console.log(ctx.update.message.from, ctx.update.message.chat);
@@ -39,12 +47,16 @@ bot.command('img', async ctx => {
 
     args.push('r=' + Math.random());
 
-    if (CNYACL.includes(ctx.update.message.from.id)) {
+    if (CNY.includes(ctx.update.message.from.id)) {
         args.push('cny=1');
     }
 
     if (ctx.update.message.from.is_premium) {
         args.push('premium=1');
+    }
+
+    if (CNYISLAST.includes(ctx.update.message.from.id)) {
+        args.push('order=yndx,usd,eur,cny');
     }
 
     const url = base + (args.length ? '?' + args.join('&') : '');
@@ -83,7 +95,7 @@ bot.command('premium', async ctx => {
 
     args.push('r=' + Math.random());
 
-    if (CNYACL.includes(ctx.update.message.from.id)) {
+    if (CNY.includes(ctx.update.message.from.id)) {
         args.push('cny=1');
     }
 
@@ -169,9 +181,14 @@ process.on('SIGTERM', async () => {
 function processData(stocks, userId) {
     const addContent = ({ change, price, ticker, fallback }) => {
         const strPrice = (price || fallback).toFixed(2).replace('.', '\\.');
-        const strChange = (change || 0).toFixed(2);
+        const strChange = (
+            (
+                (change || 0) / ((price || fallback) + change)
+            )
+        * 100).toFixed(2) + '%';
+
         const postfix = (
-            (change > 0 && strChange !== '0.00' ? '+' : '') + strChange.replace('-', '−')
+            (change > 0 && strChange !== '0.00%' ? '+' : '') + strChange.replace('-', '−')
         );
         // .replace('.', '.')
         // .replace('+', '\\+');
@@ -187,7 +204,7 @@ function processData(stocks, userId) {
 +--------+---------+--------+\n`;
 
     content += stocks.filter(({ ticker }, i) => {
-        if (ticker === 'CNY' && CNYACL.includes(userId)) {
+        if (ticker === 'CNY' && CNY.includes(userId)) {
             return true;
         }
 
@@ -203,7 +220,11 @@ function processData(stocks, userId) {
             return true
         }
 
-        return true;
+        if (ticker === 'CHF' && CHF.includes(userId)) {
+            return true;
+        }
+
+        return ['YNDX', 'USD', 'EUR'].includes(ticker);
     }).map(({ change, price, fallback, ticker }) => addContent({
         change,
         price,
