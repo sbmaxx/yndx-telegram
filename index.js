@@ -134,7 +134,7 @@ function getOrderForUserId(userId) {
 
     return Object.keys(clubs).reduce((acc, key) => {
         let acl = clubs[key];
-        if (acl || acl.includes(userId)) {
+        if (acl === true || acl.includes(userId)) {
             acc.push(key);
         }
         return acc;
