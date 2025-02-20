@@ -155,6 +155,10 @@ function getAPIUrl(userId, isPremium) {
         args.push('percents=1');
     }
 
+    if (userId === users.ternos) {
+        args.push('typo=1');
+    }
+
     args.push('order=' + getOrderForUserId(userId).join(','));
 
     return base + (args.length ? '?' + args.join('&') : '');
