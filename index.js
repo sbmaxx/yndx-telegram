@@ -28,8 +28,8 @@ const users = require('./users');
 // TODO: move to separate file
 const clubs = {
     'ydex': true,
-    'moex': [users.vadimP, users.sbmaxx, users.xxxxxx, users.igorS, users.vitaly],
-    'nbis': [users.vadimP, users.sbmaxx, users.xxxxxx, users.igorS, users.vitaly],
+    'nbis': [users.vadimP, users.mfurzikov, users.sbmaxx, users.xxxxxx, users.igorS, users.vitaly],
+    'moex': [users.vadimP, users.mfurzikov, users.sbmaxx, users.xxxxxx, users.igorS, users.vitaly],
     'usd': true,
     'eur': [users.vadimP, users.sbmaxx, users.xxxxxx, users.igorS, users.vitaly],
     'cny': [users.vitaly, users.mfurzikov, users.igorS, users.nikitaP],
