@@ -11,5 +11,6 @@ module.exports = {
     alsuprun: 223013551,
     likipiki: 216399855,
     antonina: 889653278,
-    ternos: 1642712
+    ternos: 1642712,
+    bstrukov: 373762895
 }

@@ -37,6 +37,7 @@ const clubs = {
     'kzt': [users.nazarkin],
     'rsd': [users.luckjanov],
     'chf': [users.mfurzikov],
+    'sbux': [users.bstrukov]
 }
 
 bot.command('img', async ctx => {
