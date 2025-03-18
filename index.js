@@ -29,9 +29,9 @@ const users = require('./users');
 const clubs = {
     'ydex': true,
     'nbis': [users.vadimP, users.mfurzikov, users.sbmaxx, users.xxxxxx, users.igorS, users.vitaly, users.ternos],
-    'moex': [users.vadimP, users.mfurzikov, users.sbmaxx, users.xxxxxx, users.igorS, users.vitaly],
+    'moex': true,
     'usd': true,
-    'eur': [users.vadimP, users.sbmaxx, users.xxxxxx, users.igorS, users.vitaly, users.ternos],
+    'eur': true,
     'cny': [users.vitaly, users.mfurzikov, users.igorS, users.nikitaP],
     'thb': [users.nazarkin],
     'kzt': [users.nazarkin],
