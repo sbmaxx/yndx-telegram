@@ -40,6 +40,8 @@ const clubs = {
     'sbux': [users.bstrukov]
 }
 
+const sleep = ms => new Promise(res => setTimeout(res, ms));
+
 bot.command('img', async ctx => {
     console.log(ctx.update.message.from, ctx.update.message.chat);
 
@@ -58,7 +60,7 @@ bot.command('img', async ctx => {
 
         await page.waitForSelector('body.loaded');
 
-        await page.waitForTimeout(1500);
+	await sleep(1500);
 
         await page.screenshot({ path: 'example.png' });
 
