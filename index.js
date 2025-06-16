@@ -43,36 +43,41 @@ const clubs = {
 const sleep = ms => new Promise(res => setTimeout(res, ms));
 
 bot.command('img', async ctx => {
-    console.log(ctx.update.message.from, ctx.update.message.chat);
-
-    const url = getAPIUrl(ctx.update.message.from.id, ctx.update.message.from.is_premium);
-
     try {
-        const page = await browser.newPage();
+        console.log(ctx.update.message.from, ctx.update.message.chat);
 
-        await page.setViewport({
-            width: 800,
-            height: 600,
-            deviceScaleFactor: 1,
-        });
+        const url = getAPIUrl(ctx.update.message.from.id, ctx.update.message.from.is_premium, 'default');
 
-        await page.goto(url);
-
-        await page.waitForSelector('body.loaded');
-
-	await sleep(1500);
-
-        await page.screenshot({ path: 'example.png' });
+        await getImage(url);
 
         ctx.replyWithPhoto({
             source: './example.png'
         });
 
-	    await page.close();
     } catch (e) {
         console.error(e);
         return ctx.replyWithMarkdown('Бот в *отпуске*\n' + e);
     }
+
+});
+
+bot.command('bee', async ctx => {
+    try {
+        console.log(ctx.update.message.from, ctx.update.message.chat);
+
+        const url = getAPIUrl(ctx.update.message.from.id, ctx.update.message.from.is_premium, 'bee');
+
+        await getImage(url);
+
+        ctx.replyWithPhoto({
+            source: './example.png'
+        });
+
+    } catch (e) {
+        console.error(e);
+        return ctx.replyWithMarkdown('Бот в *отпуске*\n' + e);
+    }
+
 });
 
 bot.command('wazzup', ctx => {
@@ -144,7 +149,28 @@ function getOrderForUserId(userId) {
     }, []);
 }
 
-function getAPIUrl(userId, isPremium) {
+async function getImage(url) {
+    const page = await browser.newPage();
+
+    await page.setViewport({
+        width: 800,
+        height: 600,
+        deviceScaleFactor: 1,
+    });
+
+    await page.goto(url);
+
+    await page.waitForSelector('body.loaded');
+
+    await sleep(1500);
+
+    await page.screenshot({ path: 'example.png' });
+
+    await page.close();
+}
+
+
+function getAPIUrl(userId, isPremium, mode) {
     const base = 'https://sbmaxx.github.io/yndx/';
     const args = [];
 
@@ -160,6 +186,10 @@ function getAPIUrl(userId, isPremium) {
 
     if (userId === users.ternos) {
         args.push('typo=1');
+    }
+
+    if (mode === 'bee') {
+        args.push('bee=1');
     }
 
     args.push('order=' + getOrderForUserId(userId).join(','));
