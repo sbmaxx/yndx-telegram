@@ -36,7 +36,6 @@ const clubs = {
     'thb': [users.nazarkin],
     'kzt': [users.nazarkin],
     'rsd': [users.luckjanov],
-    'chf': [users.mfurzikov],
     'sbux': [users.bstrukov]
 }
 
