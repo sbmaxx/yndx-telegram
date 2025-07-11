@@ -15,6 +15,13 @@ if (!token) {
     process.exit(1);
 }
 
+const jokes = require('./jokes.json');
+
+function getRandomJoke() {
+    const index = Math.floor(Math.random() * jokes.length);
+    return jokes[index];
+}
+
 const bot = new Telegraf(token);
 
 let browser;
@@ -74,8 +81,8 @@ bot.command('bee', async ctx => {
 
     } catch (e) {
         console.error(e);
-        return ctx.replyWithMarkdown('Бот в *отпуске*\n' + e);
-    }
+        return ctx.reply('Камера снова не работает, поэтому почитайте «смешную» шутку:\n\n' + getRandomJoke()); //ctx.replyWithMarkdown('Бот в *отпуске*\n' + e);
+   }
 
 });
 
