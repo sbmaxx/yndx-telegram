@@ -39,6 +39,7 @@ const clubs = {
     'moex': true,
     'usd': true,
     'eur': true,
+    'oil': true,
     'cny': [users.vitaly, users.mfurzikov, users.igorS, users.nikitaP],
     'thb': [users.nazarkin],
     'kzt': [users.nazarkin],
@@ -145,7 +146,7 @@ process.on('SIGTERM', async () => {
 
 function getOrderForUserId(userId) {
     if (userId === users.vitaly) {
-        return ['ydex', 'nbis', 'moex', 'eur', 'usd', 'cny'];
+        return ['ydex', 'nbis', 'moex', 'eur', 'usd', 'oil', 'cny'];
     }
 
     return Object.keys(clubs).reduce((acc, key) => {
