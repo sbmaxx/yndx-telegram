@@ -67,6 +67,7 @@ bot.command('img', async ctx => {
 
 });
 
+/*
 bot.command('bee', async ctx => {
     try {
         console.log(ctx.update.message.from, ctx.update.message.chat);
@@ -85,6 +86,7 @@ bot.command('bee', async ctx => {
    }
 
 });
+*/
 
 bot.command('wazzup', ctx => {
     console.log(ctx.update.message.from, ctx.update.message.chat);
